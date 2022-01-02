@@ -35,10 +35,17 @@ foreach(target i686-pc-serenity;x86_64-pc-serenity;aarch64-pc-serenity)
     set(RUNTIMES_${target}_COMPILER_RT_BUILD_PROFILE OFF CACHE BOOL "")
     set(RUNTIMES_${target}_COMPILER_RT_BUILD_XRAY OFF CACHE BOOL "")
     set(RUNTIMES_${target}_COMPILER_RT_BUILD_ORC OFF CACHE BOOL "")
-
+    
     set(BUILTINS_${target}_CMAKE_BUILD_TYPE Release CACHE STRING "")
     set(BUILTINS_${target}_CMAKE_SYSROOT ${SERENITY_${target}_SYSROOT} CACHE PATH "")
     set(BUILTINS_${target}_COMPILER_RT_EXCLUDE_ATOMIC_BUILTIN OFF CACHE BOOL "")
+
+
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        set(RUNTIMES_${target}_CMAKE_SYSTEM_NAME Linux CACHE STRING "")
+        set(BUILTINS_${target}_CMAKE_SYSTEM_NAME Linux CACHE STRING "")
+    ENDIF()
+    
 endforeach()
 
 set(LLVM_TOOLCHAIN_TOOLS
